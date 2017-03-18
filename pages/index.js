@@ -11,10 +11,9 @@ export default class extends React.Component {
   }
 
   static async getInitialProps(props) {
-    console.log(props.req.headers.host)
-    const res = await fetch(`http://${props.req.headers.host}/pkgs/react,preact`)
+    const pkgs = props.req.query.pkgs || ['react','react-dom', 'preact', 'jquery'].join(',')
+    const res = await fetch(`http://${props.req.headers.host}/pkgs/${pkgs}`)
     const data = await res.json();
-    console.log(data)
     return { packageSizes: data }
 
      // return request
@@ -63,16 +62,32 @@ export default class extends React.Component {
 
     return (
       <div className='list'>
-        Hello world lol!
-
+        <ul>
         {this.props.packageSizes.map((pkg, key)=> {
           return (
-            <div key={key}>
-            <img src={`https://img.shields.io/badge/${pkg[0]}-${pkg[1]}-green.svg`} />
-            {pkg[0]} - {pkg[1]}
-            </div>
+            <li key={key}>
+              <h3>{pkg[0]}</h3>
+              <img src={`https://img.shields.io/badge/${pkg[0]}-${pkg[2]}-green.svg`} />
+              <table>
+                <thead>
+                  <tr>
+                    <th>Size</th>
+                    <th>Minified</th>
+                    <th>Minified + Gzipped</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>{pkg[1]}</th>
+                    <th>{pkg[2]}</th>
+                    <th>{pkg[3]}</th>
+                  </tr>
+                </tbody>
+              </table>
+            </li>
           )
         })}
+        </ul>
       </div>
     )
   }
