@@ -12,9 +12,13 @@ app.prepare()
 
   server.get('/pkgs/:pkgList', (req, res) => {
     const packageList = req.params.pkgList.split(',') || ['react','react-dom', 'preact', 'jquery']
-    pkgsApi(packageList).then((data) => {
-      res.send(data);
-    })
+    pkgsApi(packageList)
+      .then((data) => {
+        res.send(data);
+      })
+      .catch((err) => {
+        res.status(500).send({error: "Couldn't get info on one of the packages requested"});
+      })
   })
 
   server.get('*', (req, res) => {
