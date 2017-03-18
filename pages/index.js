@@ -10,15 +10,12 @@ export default class extends React.Component {
     }
   }
 
-  static async getInitialProps() {
-    // import getSizes from 'package-size';
-    const pkgsApi = require('../api/pkgs')
-    const packageList = ['react','react-dom', 'preact', 'jquery']
-    const packageSizes = await pkgsApi(packageList)
-    return { packageSizes: packageSizes }
-    // const res = await fetch('http://localhost/pkgs/react,preact')
-    // const data = await res.json();
-    // return { packageSizes: data }
+  static async getInitialProps(props) {
+    console.log(props.req.headers.host)
+    const res = await fetch(`http://${props.req.headers.host}/pkgs/react,preact`)
+    const data = await res.json();
+    console.log(data)
+    return { packageSizes: data }
 
      // return request
      //   .get('/pkgs/react,preact')
