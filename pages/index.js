@@ -46,7 +46,10 @@ export default class extends React.Component {
 
   search(e) {
     e.preventDefault()
-    this.setState({loading:true})
+    this.setState({
+      packageSizes: [],
+      loading:true
+    })
     this.fetchResultsForQuery()
   }
 
@@ -54,6 +57,39 @@ export default class extends React.Component {
   render () {
     return (
       <div className='app'>
+        <style jsx>{`
+          * {
+            color: #333;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+          }
+
+          .app {
+            padding-top: 20vh;
+            max-width: 300px;
+            margin: 0 auto;
+            position: relative;
+          }
+
+          table {
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            width: 100%;
+          }
+
+          td, th {
+            font-weight: 400;
+            padding: 4px;
+          }
+
+          thead th {
+            border-bottom: 1px solid #ccc;
+          }
+          ul, ul li {
+            list-style: none;
+            margin:0;
+            padding:0;
+          }
+        `}</style>
         <form onSubmit={this.search.bind(this)}>
           <input type="search" placeholder="react-dom" onChange={this.onChangeQuery.bind(this)} value={this.state.query} />
         </form>
