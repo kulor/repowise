@@ -10,9 +10,9 @@ app.prepare()
 .then(() => {
   const server = express()
 
-  server.get('/pkgs/:pkgList', (req, res) => {
-    const packageList = req.params.pkgList.split(',') || ['react','react-dom', 'preact', 'jquery']
-    pkgsApi(packageList)
+  server.get('/pkgs/:pkg', (req, res) => {
+    const pkg = req.params.pkg || null
+    pkgsApi(pkg)
       .then((data) => {
         res.send(data);
       })
