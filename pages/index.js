@@ -146,28 +146,11 @@ export default class extends React.Component {
             }
           }
 
-
-          .card-overall-size {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 100px;
-            background: #8d55f3;
-            text-align: center;
-            color: #fff;
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            font-weight: bold;
-            font-size: 18px;
-          }
-
           @media (min-width: 400px) {
             .card-stat-icon {
               position: absolute;
-              right: 20px;
-              top: 25px;
+              right: 30px;
+              top: 35px;
             }
           }
 
