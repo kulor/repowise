@@ -67,11 +67,6 @@ export default ({ children }) => (
       thead th {
         border-bottom: 1px solid #ccc;
       }
-      ul, ul li {
-        list-style: none;
-        margin:0;
-        padding:0;
-      }
 
     `}</style>
     </Head>
