@@ -90,7 +90,7 @@ export default class extends React.Component {
             width: 100%;
             border: none;
             border-bottom: 1px solid rgba(233, 30, 99, 0.5);
-            border-radius: 0;
+            border-radius: none !import;
             transition: border 180ms ease-in-out;
           }
 
