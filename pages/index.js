@@ -90,8 +90,10 @@ export default class extends React.Component {
             width: 100%;
             border: none;
             border-bottom: 1px solid rgba(233, 30, 99, 0.5);
-            border-radius: none !import;
+            border-radius: 0;
             transition: border 180ms ease-in-out;
+            -webkit-appearance: none;
+            -webkit-border-radius:0px;
           }
 
           .search input:focus {
