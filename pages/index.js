@@ -1,6 +1,7 @@
 import React from 'react'
 import Router from 'next/router'
-import request from 'superagent';
+import request from 'superagent'
+import Head from 'next/head'
 import 'isomorphic-fetch'
 
 export default class extends React.Component {
@@ -48,7 +49,8 @@ export default class extends React.Component {
     e.preventDefault()
     this.setState({
       packageSizes: [],
-      loading:true
+      loading:true,
+      error: null
     })
     this.fetchResultsForQuery()
   }
@@ -57,17 +59,53 @@ export default class extends React.Component {
   render () {
     return (
       <div className='app'>
-        <style jsx>{`
-          * {
-            color: #333;
+        <Head>
+          <meta charset="utf-8" />
+          <meta name="viewport" content="width=device-width" />
+          <title>Package Size</title>
+          <style>{`
+          body {
+            background: #2a3351;
+            padding-top: 65px;
+            color: #fff;
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
           }
 
+          .search {
+            background: #2a3351;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+          }
+
+          .search input {
+            background: transparent;
+            padding: 20px;
+            font-size: 26px;
+            font-weight: 300;
+            color: #fff;
+            display: block;
+            width: 100%;
+            border: none;
+            border-bottom: 1px solid rgba(233, 30, 99, 0.5);
+            border-radius: 0;
+            transition: border 180ms ease-in-out;
+          }
+
+          .search input:focus {
+            outline: none;
+            border-color: rgba(233, 30, 99, 1); 
+          }
+
+
           .app {
-            padding-top: 20vh;
-            max-width: 300px;
+            max-width: 600px;
             margin: 0 auto;
+            margin-top: 20px;
             position: relative;
+            padding: 10px;
           }
 
           table {
@@ -89,9 +127,124 @@ export default class extends React.Component {
             margin:0;
             padding:0;
           }
+
+
+
+
+          .card {
+            background: #fff;
+            border-radius: 5px;
+            color: #2f395a;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+          }
+
+          @media (min-width: 400px) {
+            .card {
+              padding: 30px;
+            }
+          }
+
+
+          .card-overall-size {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            background: #8d55f3;
+            text-align: center;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            font-weight: bold;
+            font-size: 18px;
+          }
+
+          @media (min-width: 400px) {
+            .card-stat-icon {
+              position: absolute;
+              right: 20px;
+              top: 25px;
+            }
+          }
+
+          .card table {
+            border: none;
+            font-size: 13px;
+            text-align: left;
+            border-collapse: collapse;
+            margin: 10px 0;
+          }
+
+          .card table th,
+          .card table td {
+            padding: 2px 5px;
+          }
+
+          @media (min-width: 400px) {
+            .card table th,
+            .card table td {
+              padding: 2px 10px;
+            }
+          }
+
+          .card table th {
+            width: 33.333%;
+            color: #9c5479;
+            font-weight: normal;
+            font-size: 12px;
+            border-bottom: none;
+            vertical-align: bottom;
+          }
+
+          .card th:first-child,
+          .card td:first-child {
+            padding-left:0;
+          }
+
+          .card th:last-child,
+          .card td:last-child {
+            padding-right:0;
+          }
+
+          @media (min-width: 400px) {
+            .card table th {
+              font-size: 15px;
+            }
+          }
+
+          .card table td {
+            font-size: 20px;
+          }
+
+          @media (min-width: 400px) {
+            .card table td {
+              font-size: 26px;
+            }
+          }
+
+          @media (min-width: 400px) {
+            .card table {
+              font-size: 18px;
+            }
+          }
+
+          .card h3 {
+            padding: 0;
+            margin: 0;
+            font-size: 25px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+            padding-bottom: 20px;
+          }
         `}</style>
-        <form onSubmit={this.search.bind(this)}>
-          <input type="search" placeholder="react-dom" onChange={this.onChangeQuery.bind(this)} value={this.state.query} />
+        </Head>
+
+        <form className="search" onSubmit={this.search.bind(this)}>
+          <input type="search" placeholder="Find a package" onChange={this.onChangeQuery.bind(this)} value={this.state.query} />
         </form>
 
         <div className='list'>
@@ -101,24 +254,26 @@ export default class extends React.Component {
           {this.state.packageSizes.map((pkg, key)=> {
             return (
               <li key={key}>
-                <h3>{pkg.name}</h3>
-                <img src={`https://img.shields.io/badge/Package Size-${pkg.fullSize}-green.svg`} />
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Size</th>
-                      <th>Minified</th>
-                      <th>Minified + Gzipped</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th>{pkg.fullSize}</th>
-                      <th>{pkg.minifiedSize}</th>
-                      <th>{pkg.minifiedAndGzippedSize}</th>
-                    </tr>
-                  </tbody>
-                </table>
+                <div className="card">
+                  <h3>{pkg.name}</h3>
+                  <img className="card-stat-icon" src={`https://img.shields.io/badge/Package Size-${pkg.fullSize}-green.svg`} />
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Size</th>
+                        <th>Minified</th>
+                        <th>Minified + Gzipped</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><strong>{pkg.fullSize}</strong></td>
+                        <td>{pkg.minifiedSize}</td>
+                        <td>{pkg.minifiedAndGzippedSize}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </li>
             )
           })}
