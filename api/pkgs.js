@@ -7,11 +7,6 @@ const cache = new Cache({
     maxSize: 1000,
     maxAge: 1200,
     staleWhileRevalidate: 86400
-    // revalidate: function (key, callback) {
-    //   return getSizes([key], {es6:true}).then((data) => {
-    //     cache.set(key, data);
-    //   })
-    // }
 });
 
 module.exports = (pkgs) => {
@@ -33,7 +28,7 @@ module.exports = (pkgs) => {
   }
 
   var promise = new Promise(function (resolve, reject) {
-    cache.wrap(pkgs, revalidate, (err, res) => {
+    cache.wrap(pkgs.toLowerCase().replace(/s/g, '-'), revalidate, (err, res) => {
       if(err) {
         return reject(err);
       }
@@ -43,17 +38,3 @@ module.exports = (pkgs) => {
 
   return promise;
 }
-  // return getSizes(pkgs, {es6:true})
-      // .then(data => {
-      //   this.setState({
-      //     packageSizes: data
-      //   })
-        
-      //   [
-      //     ['vue', '{size}', '{minified size}', '{gzipped size}'],
-      //     ['react,react-dom', '{size}', '{minified size}', '{gzipped size}'],
-      //     ['preact', '{size}', '{minified size}', '{gzipped size}']
-      //   ]
-        
-      // })
-// }
