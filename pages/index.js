@@ -65,8 +65,8 @@ export default class extends React.Component {
   render () {
     return (
       <Page>
-        <form className="search" onSubmit={this.search.bind(this)}>
-          <input type="search" placeholder="Find a package" onChange={this.onChangeQuery.bind(this)} value={this.state.query} />
+        <form className="search" action="/item">
+          <input type="search" name="id" placeholder="Find a package" />
         </form>
 
         {this.state.loading && <div className="loading">Loading...</div>}

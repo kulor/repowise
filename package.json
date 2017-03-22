@@ -18,6 +18,8 @@
   "dependencies": {
     "express": "^4.15.2",
     "firebase": "^3.7.2",
+    "firebase-admin": "^4.1.3",
+    "firebase-queue": "^1.6.1",
     "isomorphic-fetch": "^2.2.1",
     "next": "^2.0.0-beta",
     "package-size": "^0.12.0",
