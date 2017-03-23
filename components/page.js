@@ -88,9 +88,24 @@ export default ({ children }) => (
         border: 1px solid rgba(255, 255, 255, 0.4);
       }
 
+      .about {
+        text-align: center;
+        font-size: 14px;
+        color: #fff;
+        margin-top: 50px;
+      }
+
+      .about a {
+        color: #fff; 
+      }
+
     `}</style>
     </Head>
 
     { children }
+
+    <div className="about">
+      <p>A project by <a href="https://twitter.com/kulor">@kulor</a></p>
+    </div>
   </div>
 )

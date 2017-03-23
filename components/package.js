@@ -106,9 +106,9 @@ export default ({ pkg }) => (
       }
     `}</style>
 
-    <h3><Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>{pkg.name}</Link></h3>
+    <h3><Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}><a>{pkg.name}</a></Link></h3>
     <Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>
-      <img className="card-stat-icon" src={`/badge/${pkg.name}`} />
+      <a><img className="card-stat-icon" src={`/badge/${pkg.name}`} /></a>
     </Link>
     <table>
       <thead>
