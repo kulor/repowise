@@ -9,7 +9,7 @@ export default ({ children }) => (
       <style>{`
       body {
         background: #2a3351;
-        padding-top: 65px;
+        padding-top: 95px;
         color: #fff;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -20,14 +20,7 @@ export default ({ children }) => (
         -webkit-font-smoothing: antialiased; 
       }
 
-      .search {
-        background: #2a3351;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 1;
-      }
+      .search {}
 
       .search input {
         background: transparent;
@@ -72,6 +65,27 @@ export default ({ children }) => (
 
       thead th {
         border-bottom: 1px solid #ccc;
+      }
+
+      .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #2a3351;
+        z-index: 1;
+      }
+
+      .header .logo {
+        margin: 10px 0 3px 20px;
+        padding: 2px 4px;
+        display: inline-block;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.4);
       }
 
     `}</style>

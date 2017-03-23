@@ -1,6 +1,7 @@
 import React from 'react'
 import getHomePackages from '../lib/get_home_packages'
 import Page from '../components/page'
+import Search from '../components/search'
 import PackageList from '../components/package_list'
 import request from 'superagent'
 import 'isomorphic-fetch'
@@ -10,7 +11,7 @@ export default class extends React.Component {
     super(props)
     this.state = {
       packageSizes: [],
-      query: '',
+      query: props.url.query.query || '',
       loading: false
     }
   }
@@ -20,59 +21,33 @@ export default class extends React.Component {
     return { pkgs }
   }
 
-  componentDidMount() {
-    // this.fetchResultsForQuery();
-  }
-
-  fetchResultsForQuery() {
-    
-    const res = request.get(`/pkgs/${this.state.query}`)
-      .then((res) => {
-        // this.state.packageSizes.push(res.body)
-        this.setState({
-          packageSizes: [res.body],
-          loading: false
-        })
-      })
-      .catch((err, b) => {
-
-        this.setState({
-          packageSizes: [],
-          loading: false,
-          error: JSON.parse(err.response.text).error
-        })
-      })
-    // });
-  }
-
-  onChangeQuery(e) {
+  onChangeQuery(query) {
     this.setState({
-      query: e.target.value
+      query: query
     })
   }
 
-  search(e) {
-    e.preventDefault()
-    this.setState({
-      packageSizes: [],
-      loading:true,
-      error: null
+  getPackageList() {
+    const packages = Object.values(this.props.pkgs)
+    const filteredPackages = packages.filter(pkg => {
+      return pkg.name.toLowerCase().search(this.state.query.toLowerCase()) >= 0;
     })
-    this.fetchResultsForQuery()
+    return filteredPackages
   }
 
 
   render () {
     return (
       <Page>
-        <form className="search" action="/item">
-          <input type="search" name="id" placeholder="Find a package" />
-        </form>
+        <div className="header">
+          <span className="logo">Package <strong>Mass</strong></span>
+          <Search value={this.state.query} onChange={this.onChangeQuery.bind(this)} />
+        </div>
 
         {this.state.loading && <div className="loading">Loading...</div>}
         {this.state.error && <div className="error">{this.state.error}</div>}
 
-        <PackageList pkgList={Object.values(this.props.pkgs)} />
+        <PackageList pkgList={this.getPackageList()} />
       </Page>
     )
   }
