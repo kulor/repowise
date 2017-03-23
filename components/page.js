@@ -15,6 +15,11 @@ export default ({ children }) => (
         -webkit-font-smoothing: antialiased;
       }
 
+      * {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased; 
+      }
+
       .search {
         background: #2a3351;
         position: fixed;

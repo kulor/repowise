@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 export default ({ pkg }) => (
   <div className="card">
     <style>{`
@@ -93,10 +95,21 @@ export default ({ pkg }) => (
         border-bottom: 1px solid rgba(0, 0, 0, 0.07);
         padding-bottom: 20px;
       }
+
+      .card h3 a {
+        color: #2f395a;
+        text-decoration: none;
+      }
+
+      .card h3 a:hover {
+        text-decoration: underline;
+      }
     `}</style>
 
-    <h3>{pkg.name}</h3>
-    <img className="card-stat-icon" src={`https://img.shields.io/badge/Package Size-${pkg.fullSize}-green.svg`} />
+    <h3><Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>{pkg.name}</Link></h3>
+    <Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>
+      <img className="card-stat-icon" src={`/badge/${pkg.name}`} />
+    </Link>
     <table>
       <thead>
         <tr>

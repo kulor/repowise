@@ -1,6 +1,7 @@
 const express = require('express')
 const next = require('next')
 const pkgsApi = require('./api/pkgs')
+const badge = require('./api/badge')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
@@ -10,15 +11,18 @@ app.prepare()
 .then(() => {
   const server = express()
 
-  server.get('/pkgs/:pkg', (req, res) => {
-    const pkg = req.params.pkg || null
-    pkgsApi(pkg)
-      .then((data) => {
-        res.send(data);
-      })
-      .catch((err) => {
-        res.status(500).send({error: "Couldn't get info on one of the packages requested"});
-      })
+  server.get('/badge/:pkg', (req, res) => {
+    badge(req.params.pkg, (svg, err) => {
+      if(err) {
+        return res.status(500).send(err.message);
+      }
+      res.set('Content-Type', 'image/svg+xml;charset=utf-8');
+      res.send(svg);
+    })
+  })
+
+  server.get('/pkg/:id', (req, res) => {
+    return app.render(req, res, '/pkg', req.params)
   })
 
   server.get('*', (req, res) => {
