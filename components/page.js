@@ -6,7 +6,11 @@ export default ({ children }) => (
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width" />
       <title>Package Size</title>
-      <style>{`
+      <style dangerouslySetInnerHTML={{__html: `
+      * {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
       body {
         background: transparent;
         padding-top: 95px;
@@ -25,12 +29,6 @@ export default ({ children }) => (
         background: linear-gradient(130deg, #2b5876 0%,  #4e4376 100%);
         z-index: -1;
       }
-
-      * {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-      }
-
 
       .app {
         max-width: 600px;
@@ -66,7 +64,7 @@ export default ({ children }) => (
         color: #fff;
       }
 
-    `}</style>
+    `}} />
     </Head>
 
     { children }
