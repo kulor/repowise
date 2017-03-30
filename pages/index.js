@@ -1,6 +1,7 @@
 import React from 'react'
 import getHomePackages from '../lib/get_home_packages'
 import Page from '../components/page'
+import Header from '../components/header'
 import Search from '../components/search'
 import PackageList from '../components/package_list'
 import request from 'superagent'
@@ -39,10 +40,9 @@ export default class extends React.Component {
   render () {
     return (
       <Page>
-        <div className="header">
-          <span className="logo">Package <strong>Mass</strong></span>
+        <Header>
           <Search value={this.state.query} onChange={this.onChangeQuery.bind(this)} />
-        </div>
+        </Header>
 
         {this.state.loading && <div className="loading">Loading...</div>}
         {this.state.error && <div className="error">{this.state.error}</div>}

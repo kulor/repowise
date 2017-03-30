@@ -5,7 +5,7 @@ export default ({ pkg }) => (
     <style>{`
       .card {
         background: #fff;
-        border-radius: 5px;
+        border-radius: 3px;
         color: #2f395a;
         position: relative;
         overflow: hidden;
