@@ -19,10 +19,12 @@ export default class extends React.Component {
 
   render () {
     const { pkg } = this.props
-    return <Page>
-              <Header />
-              <Package pkg={pkg} />
-            </Page>
+    return (
+      <Page>
+        <Header />
+        <Package pkg={pkg} />
+      </Page>
+    )
   }
 
   componentDidMount () {}
