@@ -2,6 +2,26 @@ import Link from 'next/link'
 
 export default ({ pkg }) => (
   <div className="card">
+    <h3><Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}><a>{pkg.name}</a></Link></h3>
+    <Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>
+      <a><img className="card-stat-icon" src={`/badge/${pkg.name}`} /></a>
+    </Link>
+    <table>
+      <thead>
+        <tr>
+          <th>Size</th>
+          <th>Minified</th>
+          <th>Minified + Gzipped</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>{pkg.fullSize}</strong></td>
+          <td>{pkg.minifiedSize}</td>
+          <td>{pkg.minifiedAndGzippedSize}</td>
+        </tr>
+      </tbody>
+    </table>
     <style>{`
       .card {
         background: #fff;
@@ -105,26 +125,5 @@ export default ({ pkg }) => (
         text-decoration: underline;
       }
     `}</style>
-
-    <h3><Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}><a>{pkg.name}</a></Link></h3>
-    <Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>
-      <a><img className="card-stat-icon" src={`/badge/${pkg.name}`} /></a>
-    </Link>
-    <table>
-      <thead>
-        <tr>
-          <th>Size</th>
-          <th>Minified</th>
-          <th>Minified + Gzipped</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>{pkg.fullSize}</strong></td>
-          <td>{pkg.minifiedSize}</td>
-          <td>{pkg.minifiedAndGzippedSize}</td>
-        </tr>
-      </tbody>
-    </table>
   </div>
 )

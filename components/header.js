@@ -1,9 +1,14 @@
-import Head from 'next/head'
+import Link from 'next/link'
 
 export default ({ children }) => (
-  <div className='header'>
-    <Head>
-      <style>{`
+  <div>
+    <div className='header'>
+      <Link href="/">
+        <a><span className="logo">Package <strong>Mass</strong></span></a>
+      </Link>
+      { children }
+
+      <style jsx>{`
       .header {
         position: absolute;
         top: 0;
@@ -14,7 +19,7 @@ export default ({ children }) => (
         z-index: 1;
       }
 
-      .header .logo {
+      .logo {
         margin: 10px 0 3px 20px;
         padding: 2px 4px;
         display: inline-block;
@@ -27,8 +32,6 @@ export default ({ children }) => (
       }
 
     `}</style>
-    </Head>
-    <span className="logo">Package <strong>Mass</strong></span>
-    { children }
+    </div>
   </div>
 )
