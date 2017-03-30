@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 
 export default ({ children }) => (
   <div className='app'>
@@ -70,7 +71,9 @@ export default ({ children }) => (
     { children }
 
     <div className="about">
-      <p>A project by <a href="https://twitter.com/kulor">@kulor</a></p>
+      <p>A project by <a href="https://twitter.com/kulor">@kulor</a>. <Link href="/request">
+        <a className="header-request">Add a package</a>
+      </Link></p>
     </div>
   </div>
 )

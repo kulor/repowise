@@ -4,8 +4,9 @@ export default ({ children }) => (
   <div>
     <div className='header'>
       <Link href="/">
-        <a><span className="logo">Package <strong>Mass</strong></span></a>
+        <a><span className="header-logo">Package <strong>Mass</strong></span></a>
       </Link>
+
       { children }
 
       <style jsx>{`
@@ -19,7 +20,7 @@ export default ({ children }) => (
         z-index: 1;
       }
 
-      .logo {
+      .header-logo {
         margin: 10px 0 3px 20px;
         padding: 2px 4px;
         display: inline-block;
