@@ -1,11 +1,58 @@
 import Link from 'next/link'
+// <Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>
+// {/*<a><img className="card-stat-icon" src={`/badge/${pkg.name}`} /></a> */}
+// </Link>
+
+const getPackageFullSize = (pkg) => {
+  const pkgVersion = pkg.version;
+  const pkgName = pkg.name;
+  const asset = pkg.assets[0].sizes.filter((size) => {
+    return size.file === pkg.filename.replace('.min', '')
+  });
+  if(asset[0]) {
+    return asset[0].size;
+    if(asset[0].size == undefined) {
+      console.log('not number', asset[0], pkg);
+    }
+  }
+}
+
+const getMinifiedSize = (pkg) => {
+  const pkgVersion = pkg.version;
+  const pkgName = pkg.name;
+  const asset = pkg.assets[0].sizes.filter((size) => {
+    return size.file === pkg.filename
+  });
+  if(asset[0]) {
+    return asset[0].size;
+  }
+}
+const getMinifiedAndGzippedSize = (pkg) => {
+  const pkgVersion = pkg.version;
+  const pkgName = pkg.name;
+  const asset = pkg.assets[0].sizes.filter((size) => {
+    return size.file === `${pkg.filename}.gz`
+  });
+  if(asset[0]) {
+    return asset[0].size;
+  }
+}
+
+const formatBytes = (bytes,decimals) => {
+   if(bytes == undefined) return '--';
+   if(bytes == 0) return '0 Bytes';
+   var k = 1000,
+       dm = decimals + 1 || 3,
+       sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+       i = Math.floor(Math.log(bytes) / Math.log(k));
+   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
 
 export default ({ pkg }) => (
   <div className="card">
     <h3><Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}><a>{pkg.name}</a></Link></h3>
-    <Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>
-      <a><img className="card-stat-icon" src={`/badge/${pkg.name}`} /></a>
-    </Link>
+    <p>{pkg.description}</p>
+
     <table>
       <thead>
         <tr>
@@ -16,12 +63,13 @@ export default ({ pkg }) => (
       </thead>
       <tbody>
         <tr>
-          <td><strong>{pkg.fullSize}</strong></td>
-          <td>{pkg.minifiedSize}</td>
-          <td>{pkg.minifiedAndGzippedSize}</td>
+          <td><strong>{formatBytes(getPackageFullSize(pkg), 0)}</strong></td>
+          <td>{formatBytes(getMinifiedSize(pkg), 0)}</td>
+          <td>{formatBytes(getMinifiedAndGzippedSize(pkg), 0)}</td>
         </tr>
       </tbody>
     </table>
+
     <style>{`
       .card {
         background: #fff;
