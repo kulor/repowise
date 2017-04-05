@@ -44,10 +44,21 @@ export default class extends React.Component {
           <Search value={this.state.query} onChange={this.onChangeQuery.bind(this)} />
         </Header>
 
+        <div className="intro">
+          Welcome to the best place to discover the size of javascript libraries.
+        </div>
+
         {this.state.loading && <div className="loading">Loading...</div>}
         {this.state.error && <div className="error">{this.state.error}</div>}
 
         <PackageList pkgList={this.getPackageList()} />
+        <style jsx>{`
+            .intro {
+              font-size: 24px;
+              font-weight: 400;
+              padding: 20vh 0;
+            }
+        `}</style>
       </Page>
     )
   }
