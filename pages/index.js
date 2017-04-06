@@ -62,7 +62,7 @@ export default class extends React.Component {
     ref.child('response/'+key).on('value', (snap) => {
       if( !snap.exists() ) { return; } // wait until we get data
       var dat = snap.val().hits;
-      console.log(dat)
+      // console.log(dat)
       if(dat.total === 0) {
         return this.setState({
           error: "Sorry, no results were found",
