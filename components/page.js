@@ -71,9 +71,8 @@ export default ({ children }) => (
     { children }
 
     <div className="about">
-      <p>A project by <a href="https://twitter.com/kulor">@kulor</a>. <Link href="/request">
-        <a className="header-request">Add a package</a>
-      </Link></p>
+      <p>The "About section": Be aware of the size of javascript libraries you depend on. This project works by fetching packages from cdnjs, creating a gzipped version and publishing the results. If a package you care about is missing, send me a tweet.</p>
+      <p>A project by <a href="https://twitter.com/kulor">@kulor</a>.</p>
     </div>
   </div>
 )

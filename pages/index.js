@@ -1,4 +1,5 @@
 import React from 'react'
+import Router from 'next/router'
 import getHomePackages from '../lib/get_home_packages'
 import Page from '../components/page'
 import Header from '../components/header'
@@ -17,24 +18,45 @@ export default class extends React.Component {
     this.state = {
       packageSizes: [],
       query: props.url.query.query || '',
-      pkgs: Object.values(props.pkgs) || [],
+      pkgs: props.pkgs && Object.values(props.pkgs) || [],
       loading: false
+    }
+
+    Router.onRouteChangeStart = (url) => {
+      console.log('App is changing to: ', url)
+    }
+  }
+
+  componentDidMount() {
+    if(this.props.url.query.query){
+      this.updatePackageResultsFromQuery(this.props);
+    }
+    this.getPackageResultsForHome();
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if(nextProps.url.query.query !== this.props.url.query.query) {
+      console.log('query changed', nextProps.url.query.query);
+      this.updatePackageResultsFromQuery(nextProps);
     }
   }
 
 
-  static async getInitialProps () {
-    const pkgs = await getHomePackages()
-    return { pkgs }
+  async getInitialProps () {
+    if(!this.props.url.query.query) {
+      const pkgs = await getHomePackages()
+      return { pkgs }
+    }
+    return {};
   }
 
   onChangeQuery(query) {
     this.setState({
       query: query
-    }, this.doSearch)
+    })
   }
 
-  doSearch() {
+  getPackageResultsForHome() {
     var ref = db.ref().child('search');
     var key = ref.child('request').push(
       {
@@ -42,11 +64,16 @@ export default class extends React.Component {
         index:'packages2',
         size: 50,
         // q: this.state.query,
+        // body: {
+          // minimum_should_match: 3,
         body: {
-          query: {
-            "match_phrase": {
-              // this is the field name, _all is a meta indicating any field
-              "name": this.state.query
+          "query": {
+            "constant_score" : {
+                "filter" : {
+                    "terms" : {
+                        "name" : ["react","jquery", "angular", "ember","twitter-bootstrap"]
+                    }
+                }
             }
           }
         }
@@ -55,14 +82,13 @@ export default class extends React.Component {
 
     this.setState({
       loading: true,
-      pkgs: [],
-      error: null
+      error: null,
+      pkgs: []
     })
 
     ref.child('response/'+key).on('value', (snap) => {
       if( !snap.exists() ) { return; } // wait until we get data
       var dat = snap.val().hits;
-      // console.log(dat)
       if(dat.total === 0) {
         return this.setState({
           error: "Sorry, no results were found",
@@ -76,8 +102,61 @@ export default class extends React.Component {
     });
   }
 
-  getPackageList() {
+  updatePackageResultsFromQuery(nextProps) {
+    var ref = db.ref().child('search');
+    var key = ref.child('request').push(
+      {
+        type:'package',
+        index:'packages2',
+        size: 50,
+        // q: this.state.query,
+        body: {
+          // minimum_should_match: 3,
+          query: {
+            "fuzzy": {
+              // this is the field name, _all is a meta indicating any field
+              "name": {
+                "value": nextProps.url.query.query,
+                "fuzziness": 1,
+                "prefix_length" : 1
+              }
+            }
+          }
+        }
+      }
+    ).key;
 
+    this.setState({
+      loading: true,
+      error: null,
+      pkgs: []
+    })
+
+    ref.child('response/'+key).on('value', (snap) => {
+      if( !snap.exists() ) { return; } // wait until we get data
+      var dat = snap.val().hits;
+      if(dat.total === 0) {
+        return this.setState({
+          error: "Sorry, no results were found",
+          loading: false
+        });
+      }
+      this.setState({
+        pkgs: dat.hits.map((res) => res._source),
+        loading: false
+      })
+    });
+  }
+
+  onSubmitSearch() {
+    // Search happens by observing the props.query change to ensure url persistence is kept in sync
+    Router.push({
+      pathname: '/',
+      query: { query: this.state.query }
+    })
+  }
+
+  getPackageList() {
     const packages = Object.values(this.props.pkgs)
     return packages;
     const filteredPackages = packages.filter(pkg => {
@@ -94,7 +173,7 @@ export default class extends React.Component {
           <Search
             value={this.state.query}
             onChange={this.onChangeQuery.bind(this)}
-            onSubmit={this.doSearch.bind(this)} />
+            onSubmit={this.onSubmitSearch.bind(this)} />
         </Header>
 
 
@@ -104,17 +183,6 @@ export default class extends React.Component {
           ? <div className="loading">Loading...</div>
           : <PackageList pkgList={this.state.pkgs} />
         }
-
-        <div className="intro">
-          Be aware of the size of javascript libraries you depend on.
-        </div>
-        <style jsx>{`
-            .intro {
-              font-size: 24px;
-              font-weight: 400;
-              padding: 20vh 0;
-            }
-        `}</style>
       </Page>
     )
   }

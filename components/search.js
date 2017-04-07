@@ -36,6 +36,12 @@ const Search = props => {
           -webkit-border-radius:0px;
         }
 
+        .search input:placeholder-shown,
+        .search input::-webkit-input-placeholder
+        {
+          color: rgba(255,255,255, 0.3)
+        }
+
         .search input:focus {
           outline: none;
 
