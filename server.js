@@ -21,7 +21,7 @@ app.prepare()
     })
   })
 
-  server.get('/pkg/:id', (req, res) => {
+  server.get('/package/:id', (req, res) => {
     return app.render(req, res, '/pkg', req.params)
   })
 

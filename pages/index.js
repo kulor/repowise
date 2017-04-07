@@ -29,7 +29,7 @@ export default class extends React.Component {
 
   componentDidMount() {
     if(this.props.url.query.query){
-      this.updatePackageResultsFromQuery(this.props);
+      return this.updatePackageResultsFromQuery(this.props);
     }
     this.getPackageResultsForHome();
   }

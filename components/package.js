@@ -39,7 +39,7 @@ const getMinifiedAndGzippedSize = (pkg) => {
 }
 
 const formatBytes = (bytes,decimals) => {
-   if(bytes == undefined) return '--';
+   if(bytes == undefined) return '0 Bytes';
    if(bytes == 0) return '0 Bytes';
    var k = 1000,
        dm = decimals + 1 || 3,
@@ -50,7 +50,7 @@ const formatBytes = (bytes,decimals) => {
 
 export default ({ pkg }) => (
   <div className="card">
-    <h3><Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}><a>{pkg.name}</a></Link></h3>
+    <h3><Link href={`/pkg?id=${pkg.name}`} as={`/package/${pkg.name}`}><a>{pkg.name}</a></Link></h3>
     <p>{pkg.description}</p>
 
     <table>
