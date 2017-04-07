@@ -19,7 +19,7 @@ export default class extends React.Component {
       packageSizes: [],
       query: props.url.query.query || '',
       pkgs: props.pkgs && Object.values(props.pkgs) || [],
-      loading: false
+      loading: true
     }
 
     Router.onRouteChangeStart = (url) => {
