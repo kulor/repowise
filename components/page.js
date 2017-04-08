@@ -71,7 +71,7 @@ export default ({ children }) => (
     { children }
 
     <div className="about">
-      <p><Link href="/about">About</Link>. A project by <a href="https://twitter.com/kulor">@kulor</a>.</p>
+      <p><Link href="/about"><a>About</a></Link>. A project by <a href="https://twitter.com/kulor">@kulor</a>.</p>
     </div>
   </div>
 )
