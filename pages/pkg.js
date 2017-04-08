@@ -21,7 +21,7 @@ export default class extends React.Component {
     const { pkg } = this.props
     return (
       <Page>
-        <Header />
+        <Header {...this.props} />
         <Package pkg={pkg} />
       </Page>
     )

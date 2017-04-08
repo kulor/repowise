@@ -12,7 +12,7 @@ export default class extends React.Component {
   render () {
     return (
       <Page>
-        <Header />
+        <Header {...this.props} />
         <div>
           <h1>About this site</h1>
           <p>Packagemass is a service that helps savvy frontend developers be aware of package sizes.</p>
