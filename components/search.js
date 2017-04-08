@@ -18,7 +18,24 @@ const Search = props => {
       />
       <Head>
         <style>{`
-        .search {}
+        .search {
+          position: relative;
+          padding-left: 30px;
+        }
+
+        .search:before {
+          content: "";
+          display:block;
+          width: 20px;
+          height: 20px;
+          background: url(/static/search.svg) no-repeat;
+          background-size:contain;
+          position: absolute;
+          top: 50%;
+          left: 20px;
+          transform: translateY(-50%);
+          opacity: 0.7;
+        }
 
         .search input {
           background: transparent;
