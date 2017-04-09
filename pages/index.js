@@ -8,10 +8,27 @@ import Search from '../components/search'
 import PackageList from '../components/package_list'
 import request from 'superagent'
 import 'isomorphic-fetch'
+import md5 from 'md5'
 
-import db from '../lib/db'
+import {packages2} from '../lib/db'
 
+const getPackagesForHome = () => {
+  var ref = packages2;
+  var promises = [];
+  ['react', 'lodash.js', 'jquery', 'moment.js', 'twitter-bootstrap'].forEach((pkg)=>{
+    const promise = new Promise((resolve, reject)=> {
+      ref.child(md5(pkg)).once('value', (snap) => {
+        if(snap.val() !== null) {
+          return resolve(snap.val())
+        }
+        reject()
+      })
+    })
+    promises.push(promise)
+  })
 
+  return Promise.all(promises)
+}
 
 export default class extends React.Component {
   constructor (props) {
@@ -19,64 +36,14 @@ export default class extends React.Component {
     this.state = {
       packageSizes: [],
       pkgs: props.pkgs && Object.values(props.pkgs) || [],
-      loading: true
+      loading: false
     }
   }
 
-  componentDidMount() {
-    this.getPackageResultsForHome();
-  }
 
-
-  async getInitialProps () {
-    // if(!this.props.url.query.query) {
-    //   const pkgs = await getHomePackages()
-    //   return { pkgs }
-    // }
-    return {};
-  }
-
-  getPackageResultsForHome() {
-    var ref = db.ref().child('search');
-    var key = ref.child('request').push(
-      {
-        type:'package',
-        index:'packages2',
-        size: 50,
-        body: {
-          "query": {
-            "constant_score" : {
-                "filter" : {
-                    "terms" : {
-                        "name" : ["react","jquery", "angular", "ember","twitter-bootstrap"]
-                    }
-                }
-            }
-          }
-        }
-      }
-    ).key;
-
-    this.setState({
-      loading: true,
-      error: null,
-      pkgs: []
-    })
-
-    ref.child('response/'+key).on('value', (snap) => {
-      if( !snap.exists() ) { return; } // wait until we get data
-      var dat = snap.val().hits;
-      if(dat.total === 0) {
-        return this.setState({
-          error: "Sorry, no results were found",
-          loading: false
-        });
-      }
-      this.setState({
-        pkgs: dat.hits.map((res) => res._source),
-        loading: false
-      })
-    });
+  static async getInitialProps (props) {
+    const pkgs = await getPackagesForHome()
+    return { ...this.props, pkgs }
   }
 
 
@@ -89,7 +56,7 @@ export default class extends React.Component {
 
         {this.state.loading
           ? <div style={{padding: '20px'}}><Spinner /></div>
-          : <PackageList pkgList={this.state.pkgs} />
+          : <PackageList pkgList={this.props.pkgs} />
         }
 
         <style>{`
