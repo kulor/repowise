@@ -29,7 +29,7 @@ export default class extends React.Component {
       <div>
         <div className='header'>
           <Link href="/">
-            <a><span className="header-logo">Package <strong>Mass</strong></span></a>
+            <a><span className="header-logo">Repo <strong>Wise</strong></span></a>
           </Link>
 
           <Search

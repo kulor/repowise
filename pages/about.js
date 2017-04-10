@@ -15,7 +15,7 @@ export default class extends React.Component {
         <Header {...this.props} />
         <div>
           <h1>About this site</h1>
-          <p>Packagemass helps developers be aware of frontend package sizes.</p>
+          <p>RepoWise helps developers be aware of frontend package sizes.</p>
 
           <h2>Motivation</h2>
           <p>With the ease of including frontend libraries through NPM (and other package managers), it's easy to find yourself bloating your bundles with third party code.</p>
