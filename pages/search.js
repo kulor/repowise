@@ -48,14 +48,11 @@ export default class extends React.Component {
         type:'package',
         index:'packages2',
         size: 50,
-        // q: this.state.query,
         body: {
-          // minimum_should_match: 3,
           query: {
             "fuzzy": {
-              // this is the field name, _all is a meta indicating any field
               "name": {
-                "value": nextProps.url.query.query,
+                "value": nextProps.url.query.query.toLowerCase(),
                 "fuzziness": 1,
                 "prefix_length" : 1
               }
