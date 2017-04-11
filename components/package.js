@@ -149,7 +149,7 @@ export default ({ pkg }) => (
       }
 
       .card table td {
-        font-size: 20px;
+        font-size: 16px;
       }
 
       @media (min-width: 400px) {
@@ -194,11 +194,20 @@ export default ({ pkg }) => (
         content: "";
         background: green;
         display: inline-block;
-        width: 15px;
-        height: 15px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        margin-right: 10px;
-        margin-bottom: 3px;
+        margin-right: 5px;
+        margin-bottom: 2px;
+      }
+
+      @media (min-width: 400px) {
+        .card .size-colour:before {
+          width: 12px;
+          height: 12px;
+          margin-right: 10px;
+          margin-bottom: 3px;
+        }
       }
 
       .card .size-colour-red:before {
