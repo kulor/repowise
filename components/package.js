@@ -1,7 +1,11 @@
 import Link from 'next/link'
-// <Link href={`/pkg?id=${pkg.name}`} as={`/pkg/${pkg.name}`}>
-// {/*<a><img className="card-stat-icon" src={`/badge/${pkg.name}`} /></a> */}
-// </Link>
+
+const getColourForSize = (bytes) => {
+  if(bytes >= 200000) return 'red';
+  if(bytes >= 60000) return 'orange';
+  if(bytes >= 15000) return 'yellow';
+  return 'green';
+}
 
 const getPackageFullSize = (pkg) => {
   const pkgVersion = pkg.version;
@@ -68,8 +72,8 @@ export default ({ pkg }) => (
       </thead>
       <tbody>
         <tr>
-          <td><strong>{formatBytes(getPackageFullSize(pkg), 0)}</strong></td>
-          <td>{formatBytes(getMinifiedSize(pkg), 0)}</td>
+          <td>{formatBytes(getPackageFullSize(pkg), 0)}</td>
+          <td><span className={`size-colour size-colour-${getColourForSize(getMinifiedSize(pkg))}`}>{formatBytes(getMinifiedSize(pkg), 0)}</span></td>
           <td>{formatBytes(getMinifiedAndGzippedSize(pkg), 0)}</td>
         </tr>
       </tbody>
@@ -184,6 +188,30 @@ export default ({ pkg }) => (
         font-weight: 500;
         text-decoration:none;
         margin-left: 0.5em;
+      }
+
+      .card .size-colour:before {
+        content: "";
+        background: green;
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin-right: 10px;
+        margin-bottom: 3px;
+      }
+
+      .card .size-colour-red:before {
+        background: #e05d44;
+      }
+      .card .size-colour-orange:before {
+        background: #fe7d37;
+      }
+      .card .size-colour-yellow:before {
+        background: #dfb317;
+      }
+      .card .size-colour-green:before {
+        background: #4c1;
       }
     `}</style>
   </div>
