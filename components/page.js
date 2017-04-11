@@ -6,7 +6,7 @@ export default ({ children }) => (
     <Head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width" />
-      <title>Package Size</title>
+      <title>RepoWise - Frontend package sizes</title>
       <style dangerouslySetInnerHTML={{__html: `
       * {
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
