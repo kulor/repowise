@@ -50,7 +50,12 @@ const formatBytes = (bytes,decimals) => {
 
 export default ({ pkg }) => (
   <div className="card">
-    <h3><Link href={`/pkg?id=${pkg.name}`} as={`/package/${pkg.name}`}><a>{pkg.name}</a></Link></h3>
+    <h3>
+      <Link href={`/pkg?id=${pkg.name}`} as={`/package/${pkg.name}`}>
+        <a>{pkg.name}</a>
+      </Link>
+      <span className="card-version" title="Version of package when sizes snapshot was taken">{pkg.version}</span>
+    </h3>
     <p>{pkg.description}</p>
 
     <table>
@@ -171,6 +176,14 @@ export default ({ pkg }) => (
 
       .card h3 a:hover {
         text-decoration: underline;
+      }
+
+      .card-version {
+        font-size: 70%;
+        opacity: 0.8;
+        font-weight: 500;
+        text-decoration:none;
+        margin-left: 0.5em;
       }
     `}</style>
   </div>
