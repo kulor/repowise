@@ -15,7 +15,7 @@ import {packages2} from '../lib/db'
 const getPackagesForHome = () => {
   var ref = packages2;
   var promises = [];
-  ['react', 'lodash.js', 'jquery', 'moment.js', 'twitter-bootstrap'].forEach((pkg)=>{
+  ['react', 'vue', 'lodash.js', 'jquery', 'moment.js', 'twitter-bootstrap'].forEach((pkg)=>{
     const promise = new Promise((resolve, reject)=> {
       ref.child(md5(pkg)).once('value', (snap) => {
         if(snap.val() !== null) {
