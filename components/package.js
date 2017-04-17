@@ -1,62 +1,50 @@
 import Link from 'next/link'
 import Head from 'next/head'
 
-const getColourForSize = (bits) => {
-  const bytes = bits * 0.125
+const getColourForSize = (bytes) => {
   if(bytes >= 200000) return 'red';
   if(bytes >= 60000) return 'orange';
   if(bytes >= 15000) return 'yellow';
   return 'green';
 }
 
-const getAssetsForVersion = (pkg, version) => {
-  return pkg.assets.filter(asset => {
-    return asset.version === version
-  })
-}
-
-const getAsset = pkg => {
-  const assets = getAssetsForVersion(pkg, pkg.lastversion)
-  const asset = assets[0].sizes.filter((size) => {
-    return size.file === pkg.mainfile
-  })
-
-  return asset[0]
-}
-
-const getFullAsset = pkg => {
-  const assets = getAssetsForVersion(pkg, pkg.lastversion)
-
-  const asset = assets[0].sizes.filter((size) => {
-    return size.file === pkg.mainfile.replace('.min', '')
-  })
-
-  return asset[0]
-}
-
 const getPackageFullSize = (pkg) => {
-  const asset = getFullAsset(pkg)
-  if(asset) {
-    return asset.size.uncompressed;
+  const pkgVersion = pkg.version;
+  const pkgName = pkg.name;
+  const asset = pkg.assets[0].sizes.filter((size) => {
+    return size.file === pkg.filename.replace('.min', '')
+  });
+  if(asset[0]) {
+    return asset[0].size;
+    if(asset[0].size == undefined) {
+      console.log('not number', asset[0], pkg);
+    }
   }
 }
 
 const getMinifiedSize = (pkg) => {
-  const asset = getAsset(pkg)
-  if(asset) {
-    return asset.size.uncompressed;
+  const pkgVersion = pkg.version;
+  const pkgName = pkg.name;
+  const asset = pkg.assets[0].sizes.filter((size) => {
+    return size.file === pkg.filename
+  });
+  if(asset[0]) {
+    return asset[0].size;
   }
 }
-
 const getMinifiedAndGzippedSize = (pkg) => {
-  const asset = getAsset(pkg)
-  if(asset) {
-    return asset.size.compressed;
+  const pkgVersion = pkg.version;
+  const pkgName = pkg.name;
+  const asset = pkg.assets[0].sizes.filter((size) => {
+    return size.file === `${pkg.filename}.gz`
+  });
+  if(asset[0]) {
+    return asset[0].size;
   }
 }
 
-const formatBytes = (bytes, decimals) => {
-   if(bytes == undefined) return '--';
+const formatBytes = (bytes,decimals) => {
+   if(bytes == undefined) return '0 Bytes';
    if(bytes == 0) return '0 Bytes';
    var k = 1000,
        dm = decimals + 1 || 3,
@@ -64,9 +52,7 @@ const formatBytes = (bytes, decimals) => {
        i = Math.floor(Math.log(bytes) / Math.log(k));
    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
-/*
 
-  */
 export default ({ pkg }) => (
   <div className="card">
     <Head>
@@ -76,24 +62,23 @@ export default ({ pkg }) => (
       <Link href={`/pkg?id=${pkg.name}`} as={`/package/${pkg.name}`}>
         <a>{pkg.name}</a>
       </Link>
-      <span className="card-version" title="Version of package when sizes snapshot was taken">{pkg.lastversion}</span>
+      <span className="card-version" title="Version of package when sizes snapshot was taken">{pkg.version}</span>
     </h3>
     <p>{pkg.description}</p>
 
     <table>
       <thead>
         <tr>
-          <th>Min + Gzip</th>
-          <th>Min</th>
-          <th>Full</th>
+          <th>Size</th>
+          <th>Minified</th>
+          <th>Minified + Gzipped</th>
         </tr>
       </thead>
-
       <tbody>
         <tr>
-          <td><span className={`size-colour size-colour-${getColourForSize(getMinifiedAndGzippedSize(pkg))}`}>{formatBytes(getMinifiedAndGzippedSize(pkg), 0)}</span></td>
-          <td>{formatBytes(getMinifiedSize(pkg), 0)}</td>
           <td>{formatBytes(getPackageFullSize(pkg), 0)}</td>
+          <td><span className={`size-colour size-colour-${getColourForSize(getMinifiedSize(pkg))}`}>{formatBytes(getMinifiedSize(pkg), 0)}</span></td>
+          <td>{formatBytes(getMinifiedAndGzippedSize(pkg), 0)}</td>
         </tr>
       </tbody>
     </table>
