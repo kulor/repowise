@@ -46,7 +46,7 @@ export default class extends React.Component {
     var key = ref.child('request').push(
       {
         type:'package',
-        index:'packages2',
+        index:'packages3',
         size: 50,
         body: {
           query: {
