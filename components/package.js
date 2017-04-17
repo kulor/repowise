@@ -1,8 +1,7 @@
 import Link from 'next/link'
 import Head from 'next/head'
 
-const getColourForSize = (bits) => {
-  const bytes = bits * 0.125
+const getColourForSize = (bytes) => {
   if(bytes >= 200000) return 'red';
   if(bytes >= 60000) return 'orange';
   if(bytes >= 15000) return 'yellow';
@@ -16,19 +15,26 @@ const getAssetsForVersion = (pkg, version) => {
 }
 
 const getAsset = pkg => {
-  const assets = getAssetsForVersion(pkg, pkg.lastversion)
+  const assets = getAssetsForVersion(pkg, pkg.version)
+  if(!assets[0]) {
+    return null
+  }
+
   const asset = assets[0].sizes.filter((size) => {
-    return size.file === pkg.mainfile
+    return size.file === pkg.filename
   })
 
   return asset[0]
 }
 
 const getFullAsset = pkg => {
-  const assets = getAssetsForVersion(pkg, pkg.lastversion)
+  const assets = getAssetsForVersion(pkg, pkg.version)
+  if(!assets[0]) {
+    return null
+  }
 
   const asset = assets[0].sizes.filter((size) => {
-    return size.file === pkg.mainfile.replace('.min', '')
+    return size.file === pkg.filename.replace('.min', '')
   })
 
   return asset[0]
@@ -76,7 +82,7 @@ export default ({ pkg }) => (
       <Link href={`/pkg?id=${pkg.name}`} as={`/package/${pkg.name}`}>
         <a>{pkg.name}</a>
       </Link>
-      <span className="card-version" title="Version of package when sizes snapshot was taken">{pkg.lastversion}</span>
+      <span className="card-version" title="Version of package when sizes snapshot was taken">{pkg.version}</span>
     </h3>
     <p>{pkg.description}</p>
 

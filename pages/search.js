@@ -46,19 +46,25 @@ export default class extends React.Component {
     var key = ref.child('request').push(
       {
         type:'package',
-        index:'packages3',
+        index:'packages4',
         size: 50,
         body: {
-          query: {
-            "fuzzy": {
-              "name": {
-                "value": nextProps.url.query.query.toLowerCase(),
-                "fuzziness": 1,
-                "prefix_length" : 1
-              }
-            }
+          query : {
+            term : { "name" : nextProps.url.query.query.toLowerCase() }
           }
         }
+        // q: nextProps.url.query.query.toLowerCase(),
+        // body: {
+        //   query: {
+        //     "fuzzy": {
+        //       "name": {
+        //         "value": nextProps.url.query.query.toLowerCase(),
+        //         "fuzziness": 1,
+        //         "prefix_length" : 1
+        //       }
+        //     }
+        //   }
+        // }
       }
     ).key;
 
