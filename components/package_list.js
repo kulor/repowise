@@ -4,7 +4,7 @@ export default ({ pkgList }) => (
     <ul>
       {pkgList.map((pkg, key)=> {
         return (
-          <li key={key}>
+          <li key={pkg.name}>
             <Package pkg={pkg} />
           </li>
         )

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Search from './search'
 import Router from 'next/router'
+import debounce from 'lodash.debounce';
 
 export default class extends React.Component {
   constructor (props) {
@@ -13,7 +14,12 @@ export default class extends React.Component {
   onChangeQuery(query) {
     this.setState({
       query: query
-    })
+    }, debounce(()=> {
+      Router.push({
+        pathname: '/search',
+        query: { query: this.state.query }
+      })
+    }, 1000))
   }
 
   onSubmitSearch() {

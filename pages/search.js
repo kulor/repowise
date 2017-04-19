@@ -9,6 +9,11 @@ import PackageList from '../components/package_list'
 import request from 'superagent'
 import 'isomorphic-fetch'
 
+import algoliasearch from 'algoliasearch'
+const client = algoliasearch('LGDJZ6PHE2', '31f0cc1c00b9dc3c666a25f560448e31');
+const index = client.initIndex('packages4');
+
+
 import db from '../lib/db'
 
 export default class extends React.Component {
@@ -23,14 +28,14 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    if(this.props.url.query.query){
+    // if(this.props.url.query.query){
       return this.updatePackageResultsFromQuery(this.props);
-    }
+    // }
   }
 
   componentWillUpdate(nextProps, nextState) {
     if(nextProps.url.query.query !== this.props.url.query.query) {
-      console.log('query changed', nextProps.url.query.query);
+      // console.log('query changed', nextProps.url.query.query);
       this.updatePackageResultsFromQuery(nextProps);
     }
   }
@@ -42,52 +47,65 @@ export default class extends React.Component {
   }
 
   updatePackageResultsFromQuery(nextProps) {
-    var ref = db.ref().child('search');
-    var key = ref.child('request').push(
-      {
-        type:'package',
-        index:'packages4',
-        size: 50,
-        body: {
-          query : {
-            term : { "name" : nextProps.url.query.query.toLowerCase() }
-          }
-        }
-        // q: nextProps.url.query.query.toLowerCase(),
-        // body: {
-        //   query: {
-        //     "fuzzy": {
-        //       "name": {
-        //         "value": nextProps.url.query.query.toLowerCase(),
-        //         "fuzziness": 1,
-        //         "prefix_length" : 1
-        //       }
-        //     }
-        //   }
-        // }
-      }
-    ).key;
-
+    // var ref = db.ref().child('search');
     this.setState({
       loading: true,
       error: null,
       pkgs: []
     })
 
-    ref.child('response/'+key).on('value', (snap) => {
-      if( !snap.exists() ) { return; } // wait until we get data
-      var dat = snap.val().hits;
-      if(dat.total === 0) {
-        return this.setState({
-          error: "Sorry, no results were found",
-          loading: false
-        });
-      }
+    index.search(nextProps.url.query.query, (err, content) => {
+      // console.log(content.hits);
       this.setState({
-        pkgs: dat.hits.map((res) => res._source),
+        pkgs: content.hits,
         loading: false
       })
     });
+    // var key = ref.child('request').push(
+    //   {
+    //     type:'package',
+    //     index:'packages4',
+    //     size: 50,
+    //     body: {
+    //       query : {
+    //         term : { "nameFiltered" : nextProps.url.query.query.toLowerCase() }
+    //       }
+    //     }
+    //     // q: nextProps.url.query.query.toLowerCase(),
+    //     // body: {
+    //     //   query: {
+    //     //     "fuzzy": {
+    //     //       "nameFiltered": {
+    //     //         "value": nextProps.url.query.query.toLowerCase(),
+    //     //         "fuzziness": 2,
+    //     //         "prefix_length" : 2
+    //     //       }
+    //     //     }
+    //     //   }
+    //     // }
+    //   }
+    // ).key;
+    //
+    // this.setState({
+    //   loading: true,
+    //   error: null,
+    //   pkgs: []
+    // })
+    //
+    // ref.child('response/'+key).on('value', (snap) => {
+    //   if( !snap.exists() ) { return; } // wait until we get data
+    //   var dat = snap.val().hits;
+    //   if(dat.total === 0) {
+    //     return this.setState({
+    //       error: "Sorry, no results were found",
+    //       loading: false
+    //     });
+    //   }
+    //   this.setState({
+    //     pkgs: dat.hits.map((res) => res._source),
+    //     loading: false
+    //   })
+    // });
   }
 
   onSubmitSearch() {

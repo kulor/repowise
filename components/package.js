@@ -75,9 +75,6 @@ const formatBytes = (bytes, decimals) => {
   */
 export default ({ pkg }) => (
   <div className="card">
-    <Head>
-      <link href="/static/card.css" media="all" rel="stylesheet" />
-    </Head>
     <h3>
       <Link href={`/pkg?id=${pkg.name}`} as={`/package/${pkg.name}`}>
         <a>{pkg.name}</a>

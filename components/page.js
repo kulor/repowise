@@ -66,6 +66,7 @@ export default ({ children }) => (
       }
 
     `}} />
+      <link href="/static/card.css" media="all" rel="stylesheet" />
     </Head>
 
     { children }

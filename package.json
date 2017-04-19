@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "algoliasearch": "^3.22.1",
     "express": "^4.15.2",
     "filesize-parser": "^1.4.1",
     "firebase": "^3.7.2",
@@ -23,6 +24,7 @@
     "firebase-queue": "^1.6.1",
     "gh-badges": "^1.3.0",
     "isomorphic-fetch": "^2.2.1",
+    "lodash.debounce": "^4.0.8",
     "md5": "^2.2.1",
     "next": "^2.0.0-beta",
     "package-size": "^0.12.0",
