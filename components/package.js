@@ -73,7 +73,7 @@ const formatBytes = (bytes, decimals) => {
 /*
 
   */
-export default ({ pkg }) => (
+export default ({ pkg, withVersions=false }) => (
   <div className="card">
     <h3>
       <Link href={`/pkg?id=${pkg.name}`} as={`/package/${pkg.name}`}>
@@ -100,5 +100,41 @@ export default ({ pkg }) => (
         </tr>
       </tbody>
     </table>
+
+    {withVersions && pkg.assets.map(asset => (
+      <div>
+        <h4>{asset.version}</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Filename</th>
+              <th>Compressed</th>
+              <th>Full</th>
+            </tr>
+          </thead>
+          <tbody>
+            {asset.sizes.map(size => (
+              <tr>
+                <th>{size.file}</th>
+                <td><span className={`size-colour size-colour-${getColourForSize(size.size.compressed)}`}>{formatBytes(size.size.compressed, 0)}</span></td>
+                <td>{formatBytes(size.size.uncompressed, 0)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ))}
+
+    {/*pkg.assets.map(asset => (
+      <div>
+        {asset.version}:
+        {asset.sizes.map(size => (
+          <dl>
+            <dt>{size.file}</dt>
+            <dt>{size.size.compressed} ({size.size.uncompressed})</dt>
+          </dl>
+        ))}
+      </div>
+    ))*/}
   </div>
 )
