@@ -70,9 +70,36 @@ const formatBytes = (bytes, decimals) => {
        i = Math.floor(Math.log(bytes) / Math.log(k));
    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
-/*
 
-  */
+export const VersionFiles = ({pkg}) => (
+  <div className="version-files">
+    {pkg.assets.map(asset => (
+      <div className="version-files">
+        <h4>{asset.version}</h4>
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th>Filename</th>
+              <th>Compressed</th>
+              <th>Full</th>
+            </tr>
+          </thead>
+          <tbody>
+            {asset.sizes.map(size => (
+              <tr key={size.file}>
+                <th><a href={`https://cdnjs.cloudflare.com/ajax/libs/${pkg.name}/${asset.version}/${size.file}`}>{size.file}</a></th>
+                <td><span className={`size-colour size-colour-${getColourForSize(size.size.compressed)}`}>{formatBytes(size.size.compressed, 0)}</span></td>
+                <td>{formatBytes(size.size.uncompressed, 0)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    ))}
+  </div>
+);
+
+
 export default ({ pkg, withVersions=false }) => (
   <div className="card">
     <h3>
@@ -83,7 +110,7 @@ export default ({ pkg, withVersions=false }) => (
     </h3>
     <p>{pkg.description}</p>
 
-    <table>
+    <table className="size-summary-table">
       <thead>
         <tr>
           <th>Min + Gzip</th>
@@ -101,40 +128,6 @@ export default ({ pkg, withVersions=false }) => (
       </tbody>
     </table>
 
-    {withVersions && pkg.assets.map(asset => (
-      <div>
-        <h4>{asset.version}</h4>
-        <table>
-          <thead>
-            <tr>
-              <th>Filename</th>
-              <th>Compressed</th>
-              <th>Full</th>
-            </tr>
-          </thead>
-          <tbody>
-            {asset.sizes.map(size => (
-              <tr>
-                <th>{size.file}</th>
-                <td><span className={`size-colour size-colour-${getColourForSize(size.size.compressed)}`}>{formatBytes(size.size.compressed, 0)}</span></td>
-                <td>{formatBytes(size.size.uncompressed, 0)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    ))}
-
-    {/*pkg.assets.map(asset => (
-      <div>
-        {asset.version}:
-        {asset.sizes.map(size => (
-          <dl>
-            <dt>{size.file}</dt>
-            <dt>{size.size.compressed} ({size.size.uncompressed})</dt>
-          </dl>
-        ))}
-      </div>
-    ))*/}
+    {withVersions && <VersionFiles pkg={pkg} />}
   </div>
 )

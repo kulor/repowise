@@ -38,21 +38,6 @@ export default ({ children }) => (
         padding: 10px;
       }
 
-      table {
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        width: 100%;
-      }
-
-      td, th {
-        font-weight: 400;
-        padding: 4px;
-      }
-
-      thead th {
-        border-bottom: 1px solid #ccc;
-      }
-
       .about {
         position: relative;
         text-align: center;
@@ -65,8 +50,23 @@ export default ({ children }) => (
         color: #fff;
       }
 
+      a {
+        color: #3c59b7;
+        text-decoration: none;
+      }
+      a:hover,
+      a:focus {
+        color: #3c59b7;
+        text-decoration: underline;
+      }
+      a:focus {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+      }
+
     `}} />
       <link href="/static/card.css" media="all" rel="stylesheet" />
+      <link href="/static/tables.css" media="all" rel="stylesheet" />
     </Head>
 
     { children }
