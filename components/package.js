@@ -74,7 +74,7 @@ const formatBytes = (bytes, decimals) => {
 export const VersionFiles = ({pkg}) => (
   <div className="version-files">
     {pkg.assets.map(asset => (
-      <div className="version-files">
+      <div className="version-files" key={asset.version}>
         <h4>{asset.version}</h4>
         <table className="table table-hover">
           <thead>
