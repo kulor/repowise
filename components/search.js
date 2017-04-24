@@ -11,7 +11,7 @@ const Search = props => {
   )
 
   return (
-    <form className="search" action="/" onSubmit={onSubmit}>
+    <form className="search" action="/search" onSubmit={onSubmit}>
       <input
         value={props.value}
         type="search"
