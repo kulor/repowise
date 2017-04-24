@@ -1,12 +1,9 @@
 import React from 'react'
-import Router from 'next/router'
 import getHomePackages from '../lib/get_home_packages'
 import Page from '../components/page'
 import Spinner from '../components/spinner'
 import Header from '../components/header'
-import Search from '../components/search'
 import PackageList from '../components/package_list'
-import request from 'superagent'
 
 export default class extends React.Component {
   constructor (props) {
