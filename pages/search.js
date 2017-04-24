@@ -3,8 +3,7 @@ import Router from 'next/router'
 import Page from '../components/page'
 import Spinner from '../components/spinner'
 import Header from '../components/header'
-import Search from '../components/search'
-import searchLib from '../lib/search'
+import search from '../lib/search'
 import PackageList from '../components/package_list'
 
 export default class extends React.Component {
@@ -41,7 +40,7 @@ export default class extends React.Component {
       pkgs: []
     })
 
-    searchLib(nextProps.url.query.query, (err, content) => {
+    search(nextProps.url.query.query, (err, content) => {
       this.setState({
         pkgs: content.hits,
         loading: false

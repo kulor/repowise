@@ -3,7 +3,6 @@ import getPackage from '../lib/get_package'
 import Header from '../components/header'
 import Page from '../components/page'
 import Package from '../components/package'
-import Link from 'next/link'
 
 export default class extends React.Component {
   static async getInitialProps ({ req, query: { id } }) {
