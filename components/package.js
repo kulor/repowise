@@ -1,23 +1,18 @@
 import Link from 'next/link'
-import Head from 'next/head'
 import {
   getColourForSize,
-  getAssetsForVersion,
-  getAsset,
-  getFullAsset,
   getPackageFullSize,
   getMinifiedSize,
   getMinifiedAndGzippedSize,
   formatBytes
 } from '../lib/package_helper'
 
-
 export const VersionFiles = ({pkg}) => (
-  <div className="version-files">
+  <div className='version-files'>
     {pkg.assets.map(asset => (
-      <div className="version-files" key={asset.version}>
+      <div className='version-files' key={asset.version}>
         <h4>{asset.version}</h4>
-        <table className="table table-hover">
+        <table className='table table-hover'>
           <thead>
             <tr>
               <th>Filename</th>
@@ -40,18 +35,17 @@ export const VersionFiles = ({pkg}) => (
   </div>
 )
 
-
-export default ({ pkg, withVersions=false }) => (
-  <div className="card">
+export default ({ pkg, withVersions = false }) => (
+  <div className='card'>
     <h3>
       <Link href={`/pkg?id=${pkg.name}`} as={`/package/${pkg.name}`}>
         <a>{pkg.name}</a>
       </Link>
-      <span className="card-version" title="Version of package when sizes snapshot was taken">{pkg.version}</span>
+      <span className='card-version' title='Version of package when sizes snapshot was taken'>{pkg.version}</span>
     </h3>
     <p>{pkg.description}</p>
 
-    <table className="size-summary-table">
+    <table className='size-summary-table'>
       <thead>
         <tr>
           <th>Min + Gzip</th>
