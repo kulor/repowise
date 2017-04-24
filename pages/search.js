@@ -10,8 +10,8 @@ import request from 'superagent'
 import 'isomorphic-fetch'
 
 import algoliasearch from 'algoliasearch'
-const client = algoliasearch('LGDJZ6PHE2', '31f0cc1c00b9dc3c666a25f560448e31');
-const index = client.initIndex('packages4');
+const client = algoliasearch('LGDJZ6PHE2', '31f0cc1c00b9dc3c666a25f560448e31')
+const index = client.initIndex('packages4')
 
 
 import db from '../lib/db'
@@ -28,12 +28,12 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
-    return this.updatePackageResultsFromQuery(this.props);
+    return this.updatePackageResultsFromQuery(this.props)
   }
 
   componentWillUpdate(nextProps, nextState) {
     if(nextProps.url.query.query !== this.props.url.query.query) {
-      this.updatePackageResultsFromQuery(nextProps);
+      this.updatePackageResultsFromQuery(nextProps)
     }
   }
 
@@ -55,7 +55,7 @@ export default class extends React.Component {
         pkgs: content.hits,
         loading: false
       })
-    });
+    })
   }
 
   onSubmitSearch() {
@@ -68,9 +68,9 @@ export default class extends React.Component {
 
   getPackageList() {
     const packages = Object.values(this.props.pkgs)
-    return packages;
+    return packages
     const filteredPackages = packages.filter(pkg => {
-      return pkg.name.toLowerCase().search(this.state.query.toLowerCase()) >= 0;
+      return pkg.name.toLowerCase().search(this.state.query.toLowerCase()) >= 0
     })
     return filteredPackages
   }

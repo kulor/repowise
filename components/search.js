@@ -2,9 +2,9 @@ import Head from 'next/head'
 
 const Search = props => {
   const onSubmit = (e) => {
-    e.preventDefault();
-    props.onSubmit(e.target.value);
-  };
+    e.preventDefault()
+    props.onSubmit(e.target.value)
+  }
 
   return (
     <form className="search" action="/" onSubmit={onSubmit}>

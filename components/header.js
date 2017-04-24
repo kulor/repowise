@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Search from './search'
 import Router from 'next/router'
-import debounce from 'lodash.debounce';
+import debounce from 'lodash.debounce'
 
 export default class extends React.Component {
   constructor (props) {

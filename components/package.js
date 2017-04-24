@@ -2,10 +2,10 @@ import Link from 'next/link'
 import Head from 'next/head'
 
 const getColourForSize = (bytes) => {
-  if(bytes >= 200000) return 'red';
-  if(bytes >= 60000) return 'orange';
-  if(bytes >= 15000) return 'yellow';
-  return 'green';
+  if(bytes >= 200000) return 'red'
+  if(bytes >= 60000) return 'orange'
+  if(bytes >= 15000) return 'yellow'
+  return 'green'
 }
 
 const getAssetsForVersion = (pkg, version) => {
@@ -43,32 +43,32 @@ const getFullAsset = pkg => {
 const getPackageFullSize = (pkg) => {
   const asset = getFullAsset(pkg)
   if(asset) {
-    return asset.size.uncompressed;
+    return asset.size.uncompressed
   }
 }
 
 const getMinifiedSize = (pkg) => {
   const asset = getAsset(pkg)
   if(asset) {
-    return asset.size.uncompressed;
+    return asset.size.uncompressed
   }
 }
 
 const getMinifiedAndGzippedSize = (pkg) => {
   const asset = getAsset(pkg)
   if(asset) {
-    return asset.size.compressed;
+    return asset.size.compressed
   }
 }
 
 const formatBytes = (bytes, decimals) => {
-   if(bytes == undefined) return '--';
-   if(bytes == 0) return '0 Bytes';
+   if(bytes == undefined) return '--'
+   if(bytes == 0) return '0 Bytes'
    var k = 1000,
        dm = decimals + 1 || 3,
        sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
-       i = Math.floor(Math.log(bytes) / Math.log(k));
-   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+       i = Math.floor(Math.log(bytes) / Math.log(k))
+   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
 
 export const VersionFiles = ({pkg}) => (
@@ -97,7 +97,7 @@ export const VersionFiles = ({pkg}) => (
       </div>
     ))}
   </div>
-);
+)
 
 
 export default ({ pkg, withVersions=false }) => (
