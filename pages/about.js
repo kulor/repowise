@@ -18,11 +18,11 @@ export default class extends React.Component {
           <p>When considering a new package I wanted an easy means to find the size (only the parts of a repo that would be included in my project). I didn't find anything that solved my needs, so built it myself.</p>
 
           <h2>Technology</h2>
-          <p>The frontend and a light sprinkling of backend is written in React powered by <a href="https://github.com/zeit/next.js">Next.js</a> and Express.js hosted on Heroku.</p>
+          <p>The frontend and a light sprinkling of backend is written in React powered by <a href='https://github.com/zeit/next.js'>Next.js</a> and Express.js hosted on Heroku.</p>
 
-          <p><a href="https://cdnjs.com/">CDNJS</a> is used as a stopgap (whilst work to stabilise a custom solution is made more reliable) to get a list of static files for a package which can be downloaded and gzipped.</p>
-          <p>The heavy lifting of downloading, gzipping and calculating package sizes are run as throttled (to be kind to CDNJS' service) Node.js scripts on a <a href="https://github.com/firebase/firebase-queue">Firebase Queue</a> and is published to a Firebase Database.</p>
-          <p>Search is powered using ElasticSearch with the help of <a href="https://github.com/firebase/flashlight">Flashlight</a> to handle ingest and auto updates of the Firebase data store.</p>
+          <p><a href='https://cdnjs.com/'>CDNJS</a> is used as a stopgap (whilst work to stabilise a custom solution is made more reliable) to get a list of static files for a package which can be downloaded and gzipped.</p>
+          <p>The heavy lifting of downloading, gzipping and calculating package sizes are run as throttled (to be kind to CDNJS' service) Node.js scripts on a <a href='https://github.com/firebase/firebase-queue'>Firebase Queue</a> and is published to a Firebase Database.</p>
+          <p>Search is powered using ElasticSearch with the help of <a href='https://github.com/firebase/flashlight'>Flashlight</a> to handle ingest and auto updates of the Firebase data store.</p>
 
           <h2>Contact</h2>
           <p>Send me a tweet to @kulor.</p>

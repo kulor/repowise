@@ -1,3 +1,4 @@
+import React from 'react'
 import Package from './package'
 
 export default ({ pkgList }) => (

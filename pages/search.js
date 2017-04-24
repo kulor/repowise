@@ -18,23 +18,23 @@ export default class extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     return this.updatePackageResultsFromQuery(this.props)
   }
 
-  componentWillUpdate(nextProps, nextState) {
-    if(nextProps.url.query.query !== this.props.url.query.query) {
+  componentWillUpdate (nextProps, nextState) {
+    if (nextProps.url.query.query !== this.props.url.query.query) {
       this.updatePackageResultsFromQuery(nextProps)
     }
   }
 
-  onChangeQuery(query) {
+  onChangeQuery (query) {
     this.setState({
       query: query
     })
   }
 
-  updatePackageResultsFromQuery(nextProps) {
+  updatePackageResultsFromQuery (nextProps) {
     this.setState({
       loading: true,
       error: null,
@@ -49,7 +49,7 @@ export default class extends React.Component {
     })
   }
 
-  onSubmitSearch() {
+  onSubmitSearch () {
     // Search happens by observing the props.query change to ensure url persistence is kept in sync
     Router.push({
       pathname: '/',
@@ -57,7 +57,7 @@ export default class extends React.Component {
     })
   }
 
-  getPackageList() {
+  getPackageList () {
     const packages = Object.values(this.props.pkgs)
     return packages
     const filteredPackages = packages.filter(pkg => {
@@ -65,7 +65,6 @@ export default class extends React.Component {
     })
     return filteredPackages
   }
-
 
   render () {
     return (

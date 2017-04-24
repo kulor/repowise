@@ -11,20 +11,20 @@ const Search = props => {
   )
 
   return (
-    <form className="search" action="/search" onSubmit={onSubmit}>
+    <form className='search' action='/search' onSubmit={onSubmit}>
       <input
         value={props.value}
-        type="search"
-        name="query"
-        placeholder="Find a package"
-        autoComplete="off"
+        type='search'
+        name='query'
+        placeholder='Find a package'
+        autoComplete='off'
         onChange={onChange}
       />
       <Head>
-        <link href="/static/search.css" media="all" rel="stylesheet" />
+        <link href='/static/search.css' media='all' rel='stylesheet' />
       </Head>
     </form>
-  );
+  )
 }
 
 export default Search

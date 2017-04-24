@@ -26,7 +26,7 @@ export default class extends React.Component {
       <Page>
         <Header {...this.props} />
 
-        {this.state.error && <div className="error">{this.state.error}</div>}
+        {this.state.error && <div className='error'>{this.state.error}</div>}
 
         {this.state.loading
           ? <div style={{padding: '20px'}}><Spinner /></div>
