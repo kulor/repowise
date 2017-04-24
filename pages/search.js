@@ -4,10 +4,8 @@ import Page from '../components/page'
 import Spinner from '../components/spinner'
 import Header from '../components/header'
 import Search from '../components/search'
+import searchLib from '../lib/search'
 import PackageList from '../components/package_list'
-import algoliasearch from 'algoliasearch'
-const client = algoliasearch('LGDJZ6PHE2', '31f0cc1c00b9dc3c666a25f560448e31')
-const index = client.initIndex('packages4')
 
 export default class extends React.Component {
   constructor (props) {
@@ -43,7 +41,7 @@ export default class extends React.Component {
       pkgs: []
     })
 
-    index.search(nextProps.url.query.query, (err, content) => {
+    searchLib(nextProps.url.query.query, (err, content) => {
       this.setState({
         pkgs: content.hits,
         loading: false
