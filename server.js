@@ -16,25 +16,25 @@ const forceSsl = function (req, res, next) {
 };
 
 app.prepare()
-.then(() => {
-  const server = express()
+  .then(() => {
+    const server = express()
 
-  if (process.env.NODE_ENV === 'production') {
-    server.use(forceSsl)
-  }
+    if (process.env.NODE_ENV === 'production') {
+      server.use(forceSsl)
+    }
 
-  server.get('/package/:id', (req, res) => {
-    return app.render(req, res, '/pkg', req.params)
+    server.get('/package/:id', (req, res) => {
+      return app.render(req, res, '/pkg', req.params)
+    })
+
+    server.get('*', (req, res) => {
+      return handle(req, res)
+    })
+
+    const PORT = process.env.PORT || 3000
+
+    server.listen(PORT, (err) => {
+      if (err) throw err
+      console.log(`> Ready on http://localhost:${PORT}`)
+    })
   })
-
-  server.get('*', (req, res) => {
-    return handle(req, res)
-  })
-
-  const PORT = process.env.PORT || 3000
-
-  server.listen(PORT, (err) => {
-    if (err) throw err
-    console.log(`> Ready on http://localhost:${PORT}`)
-  })
-})
