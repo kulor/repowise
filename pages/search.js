@@ -41,6 +41,13 @@ export default class extends React.Component {
     })
 
     search(nextProps.url.query.query, (err, content) => {
+      if (err) {
+        return this.setState({
+          error: err.message,
+          loading: false
+        })
+      }
+
       this.setState({
         pkgs: content.hits,
         loading: false
@@ -54,15 +61,6 @@ export default class extends React.Component {
       pathname: '/',
       query: { query: this.state.query }
     })
-  }
-
-  getPackageList () {
-    const packages = Object.values(this.props.pkgs)
-    return packages
-    const filteredPackages = packages.filter(pkg => {
-      return pkg.name.toLowerCase().search(this.state.query.toLowerCase()) >= 0
-    })
-    return filteredPackages
   }
 
   render () {
