@@ -74,21 +74,10 @@ export default class extends React.Component {
       <Page>
         <Header {...this.props} />
 
-        {this.state.error && <div className="error">{this.state.error}</div>}
-
         {this.state.loading
           ? <div style={{padding: '20px'}}><Spinner /></div>
           : <PackageList pkgList={this.state.pkgs} />
         }
-
-        <style>{`
-            .error {
-              text-align: center;
-              font-weight: bold;
-              color: #cbc6de;
-              font-size: 20px;
-            }
-        `}</style>
       </Page>
     )
   }

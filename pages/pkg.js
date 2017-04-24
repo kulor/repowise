@@ -17,7 +17,6 @@ export default class extends React.Component {
       <Page>
         <Header {...this.props} />
         <Package pkg={pkg} withVersions={true} />
-        <h4>Versions</h4>
       </Page>
     )
   }

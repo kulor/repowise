@@ -4,11 +4,6 @@ import Page from '../components/page'
 import Link from 'next/link'
 
 export default class extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {}
-  }
-
   render () {
     return (
       <Page>
@@ -53,7 +48,4 @@ export default class extends React.Component {
       </Page>
     )
   }
-
-  componentDidMount () {}
-
 }
