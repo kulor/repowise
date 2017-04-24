@@ -1,7 +1,5 @@
 const express = require('express')
 const next = require('next')
-const pkgsApi = require('./api/pkgs')
-const badge = require('./api/badge')
 
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
