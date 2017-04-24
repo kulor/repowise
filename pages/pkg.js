@@ -6,15 +6,9 @@ import Package from '../components/package'
 import Link from 'next/link'
 
 export default class extends React.Component {
-
   static async getInitialProps ({ req, query: { id } }) {
     const pkg = await getPackage(id)
     return { pkg }
-  }
-
-  constructor (props) {
-    super(props)
-    this.state = {}
   }
 
   render () {
@@ -27,7 +21,4 @@ export default class extends React.Component {
       </Page>
     )
   }
-
-  componentDidMount () {}
-
 }
