@@ -2,13 +2,11 @@ import Package from './package'
 export default ({ pkgList }) => (
   <div className='list'>
     <ul>
-      {pkgList.map((pkg, key)=> {
-        return (
-          <li key={pkg.name}>
-            <Package pkg={pkg} />
-          </li>
-        )
-      })}
+      {pkgList.map(pkg => (
+        <li key={pkg.name}>
+          <Package pkg={pkg} />
+        </li>
+      ))}
     </ul>
 
     <style>{`
