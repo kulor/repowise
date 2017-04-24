@@ -20,18 +20,8 @@ app.prepare()
   const server = express()
 
   if (process.env.NODE_ENV === 'production') {
-    server.use(forceSsl);
+    server.use(forceSsl)
   }
-
-  server.get('/badge/:pkg', (req, res) => {
-    badge(req.params.pkg, (svg, err) => {
-      if(err) {
-        return res.status(500).send(err.message);
-      }
-      res.set('Content-Type', 'image/svg+xml;charset=utf-8');
-      res.send(svg);
-    })
-  })
 
   server.get('/package/:id', (req, res) => {
     return app.render(req, res, '/pkg', req.params)
