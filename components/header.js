@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 import Search from './search'
 import Router from 'next/router'
@@ -7,14 +8,14 @@ export default class extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      query: props.url.query.query || '',
+      query: props.url.query.query || ''
     }
   }
 
-  onChangeQuery(query) {
+  onChangeQuery (query) {
     this.setState({
       query: query
-    }, debounce(()=> {
+    }, debounce(() => {
       Router.push({
         pathname: '/search',
         query: { query: this.state.query }
@@ -22,7 +23,7 @@ export default class extends React.Component {
     }, 1000))
   }
 
-  onSubmitSearch() {
+  onSubmitSearch () {
     // Search happens by observing the props.query change to ensure url persistence is kept in sync
     Router.push({
       pathname: '/search',
@@ -34,8 +35,8 @@ export default class extends React.Component {
     return (
       <div>
         <div className='header'>
-          <Link href="/">
-            <a><span className="header-logo">Repo<strong>Wise</strong></span></a>
+          <Link href='/'>
+            <a><span className='header-logo'>Repo<strong>Wise</strong></span></a>
           </Link>
 
           <Search
